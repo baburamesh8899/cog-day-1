@@ -62,4 +62,20 @@ Process the request using these sequential steps:
 5. Log a structured success or failure message containing the `user_id`.
 # EXPECTED OUTPUT SCHEMAIf successful, return: (True, {"status": "validated", "payload": PydanticModel})
 If failed, return: (False, {"status": "failed", "reason": "Error details string"})
+
+
+
+
+ Another :
+
+
+ 🚫 The Bad Prompt
+"Write a python pandas script to clean some order data and make sure it has no null values."
+⚡ The Good Prompt (Context-Aware Architecture)
+Markdown
+ 
+# ROLEYou are an expert Lead Data Engineer specializing in robust, distributed data pipelines.
+# GOALBuild a production-grade Python function named `clean_and_bound_orders` using the pandas library that sanitizes an incoming DataFrame of e-Commerce orders.
+# CONTEXT & CONSTRAINTS- Input Columns: `order_id` (str), `customer_id` (str), `order_amount` (float), `timestamp` (str), `coupon_code` (str).- Null Boundaries: `order_id`, `customer_id`, and `order_amount` have strict non-null boundaries. Drop any rows failing this. `coupon_code` can be null; fill missing values with the string "NONE".- Type Enforcement: Convert `timestamp` into a standard ISO datetime object. If parsing fails, drop the row.- Output: Return a clean, strictly typed pandas DataFrame along with a tracking dictionary showing metadata execution metrics (e.g., rows dropped, clean rows remaining).
+# EXPECTED BEHAVIOREnsure the function handles empty dataframes gracefully without raising unhandled memory or index exceptions.
  
