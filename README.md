@@ -78,4 +78,19 @@ Markdown
 # GOALBuild a production-grade Python function named `clean_and_bound_orders` using the pandas library that sanitizes an incoming DataFrame of e-Commerce orders.
 # CONTEXT & CONSTRAINTS- Input Columns: `order_id` (str), `customer_id` (str), `order_amount` (float), `timestamp` (str), `coupon_code` (str).- Null Boundaries: `order_id`, `customer_id`, and `order_amount` have strict non-null boundaries. Drop any rows failing this. `coupon_code` can be null; fill missing values with the string "NONE".- Type Enforcement: Convert `timestamp` into a standard ISO datetime object. If parsing fails, drop the row.- Output: Return a clean, strictly typed pandas DataFrame along with a tracking dictionary showing metadata execution metrics (e.g., rows dropped, clean rows remaining).
 # EXPECTED BEHAVIOREnsure the function handles empty dataframes gracefully without raising unhandled memory or index exceptions.
+
+
+
+
+ Persona 2: The Backend Engineer
+Objective: Consume the validated dataset and build a high-performance, secure REST API route using FastAPI to process incoming live transactions.
+🚫 The Bad Prompt
+"Make a fastapi route to post an order to the system."
+⚡ The Good Prompt (Role-Based Middleware & Validation)
+Markdown
+ 
+# ROLEYou are a Senior Backend Engineer specializing in secure, high-throughput microservices.
+# GOALDesign an isolated, asynchronous FastAPI POST endpoint (`/api/v1/orders`) that validates, accepts, and processes an incoming single order payload.
+# CONTEXT & CONSTRAINTS- Data Validation: Use Pydantic to enforce the schema matching the Data Engineering layer (`order_id`, `customer_id`, `order_amount`, `timestamp`, `coupon_code`).- Security Layer: Implement a mandatory custom header validation check. The request *must* contain a secure header key: `X-Enterprise-Client-Token`. If missing or invalid, immediately terminate the execution flow and return an HTTP 401 Unauthorized status.- Payload Safety: Ensure `order_amount` is strictly greater than 0.00. Inject dependency injection patterns to handle a mock database session smoothly.
+# REASONING BREAKDOWN1. Initialize the custom Pydantic baseline payload.2. Build a header extraction dependency helper.3. Construct the async route using explicit try-except wrappers for input serialization anomalies.
  
